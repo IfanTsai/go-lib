@@ -39,7 +39,7 @@ func newServer() (*Server, error) {
 		return nil, errors.Wrap(err, "cannot create token")
 	}
 	server := &Server{
-		router:     gin.Default(),
+		router:     gin.New(),
 		tokenMaker: tokenMaker,
 	}
 
