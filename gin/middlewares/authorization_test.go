@@ -33,7 +33,7 @@ func TestAuthorization(t *testing.T) {
 			checkResponse: func(t *testing.T, recorder *httptest.ResponseRecorder) {
 				t.Helper()
 
-				require.Equal(t, recorder.Code, http.StatusOK)
+				require.Equal(t, http.StatusOK, recorder.Code)
 			},
 		},
 		{
@@ -44,7 +44,7 @@ func TestAuthorization(t *testing.T) {
 			checkResponse: func(t *testing.T, recorder *httptest.ResponseRecorder) {
 				t.Helper()
 
-				require.Equal(t, recorder.Code, http.StatusUnauthorized)
+				require.Equal(t, http.StatusUnauthorized, recorder.Code)
 			},
 		},
 		{
@@ -57,7 +57,7 @@ func TestAuthorization(t *testing.T) {
 			checkResponse: func(t *testing.T, recorder *httptest.ResponseRecorder) {
 				t.Helper()
 
-				require.Equal(t, recorder.Code, http.StatusUnauthorized)
+				require.Equal(t, http.StatusUnauthorized, recorder.Code)
 			},
 		},
 		{
@@ -70,7 +70,7 @@ func TestAuthorization(t *testing.T) {
 			checkResponse: func(t *testing.T, recorder *httptest.ResponseRecorder) {
 				t.Helper()
 
-				require.Equal(t, recorder.Code, http.StatusUnauthorized)
+				require.Equal(t, http.StatusUnauthorized, recorder.Code)
 			},
 		},
 		{
@@ -83,7 +83,7 @@ func TestAuthorization(t *testing.T) {
 			checkResponse: func(t *testing.T, recorder *httptest.ResponseRecorder) {
 				t.Helper()
 
-				require.Equal(t, recorder.Code, http.StatusUnauthorized)
+				require.Equal(t, http.StatusUnauthorized, recorder.Code)
 			},
 		},
 	}

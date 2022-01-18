@@ -1,4 +1,4 @@
-name: Run golangci-lint and unint tests
+name: Run golangci-lint and unit tests
 
 on:
   push:
@@ -19,8 +19,8 @@ jobs:
         with:
           version: v1.43.0
 
-  unint-test:
-    name: Unint Test
+  unit-test:
+    name: Unit Test
     runs-on: ubuntu-latest
 
     steps:
