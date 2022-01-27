@@ -17,13 +17,14 @@ import (
 func TestLimitRate(t *testing.T) {
 	t.Parallel()
 
+	testVersion := "1.0.0"
 	server := NewTestServer(t)
 
 	limitRatePath := "/limit_rate"
 	maxRequestPerSecond := 1
 	server.router.GET(
 		limitRatePath,
-		middlewares.LimitRate(maxRequestPerSecond),
+		middlewares.LimitRate(testVersion, maxRequestPerSecond),
 		func(c *gin.Context) {
 			time.Sleep(time.Second * 2)
 			c.JSON(http.StatusOK, gin.H{})
