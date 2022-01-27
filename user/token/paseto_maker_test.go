@@ -31,6 +31,7 @@ func TestExpirePasetoToken(t *testing.T) {
 func TestInvalidPasetoToken(t *testing.T) {
 	t.Parallel()
 
+	userID := randutils.RandomInt(0, 1024)
 	username := randutils.RandomString(6)
 	duration := time.Minute
 
@@ -40,7 +41,7 @@ func TestInvalidPasetoToken(t *testing.T) {
 	maker2, err := token.NewPasetoMaker(randutils.RandomString(32))
 	require.NoError(t, err)
 
-	userToken, err := maker1.CreateToken(username, duration)
+	userToken, err := maker1.CreateToken(userID, username, duration)
 	require.NoError(t, err)
 	require.NotEmpty(t, userToken)
 

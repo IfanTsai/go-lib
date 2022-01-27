@@ -24,8 +24,8 @@ func NewJWTMaker(secretKey string) (Maker, error) {
 }
 
 // CreateToken creates a new token for a specific username and duration.
-func (maker *JWTMaker) CreateToken(username string, duration time.Duration) (string, error) {
-	payload, err := NewPayload(username, duration)
+func (maker *JWTMaker) CreateToken(userID int64, username string, duration time.Duration) (string, error) {
+	payload, err := NewPayload(userID, username, duration)
 	if err != nil {
 		return "", errors.WithMessage(err, "failed to new payload")
 	}

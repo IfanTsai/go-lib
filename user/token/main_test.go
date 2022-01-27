@@ -19,12 +19,13 @@ func TestMain(m *testing.M) {
 func testMaker(t *testing.T, maker token.Maker) {
 	t.Helper()
 
+	userID := randutils.RandomInt(0, 1024)
 	username := randutils.RandomString(6)
 	duration := time.Minute
 	issuedAt := time.Now()
 	expiredAt := issuedAt.Add(duration)
 
-	userToken, err := maker.CreateToken(username, duration)
+	userToken, err := maker.CreateToken(userID, username, duration)
 	require.NoError(t, err)
 	require.NotEmpty(t, userToken)
 
@@ -41,7 +42,9 @@ func testMaker(t *testing.T, maker token.Maker) {
 func testExpireToken(t *testing.T, maker token.Maker) {
 	t.Helper()
 
-	userToken, err := maker.CreateToken(randutils.RandomString(6), -time.Minute)
+	userID := randutils.RandomInt(0, 1024)
+	username := randutils.RandomString(6)
+	userToken, err := maker.CreateToken(userID, username, -time.Minute)
 	require.NoError(t, err)
 	require.NotEmpty(t, userToken)
 
