@@ -3,13 +3,14 @@ package middlewares_test
 import (
 	"context"
 	"fmt"
-	"go-lib/gin/middlewares"
-	"go-lib/randutils"
-	"go-lib/user/token"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 	"time"
+
+	"github.com/IfanTsai/go-lib/gin/middlewares"
+	"github.com/IfanTsai/go-lib/randutils"
+	"github.com/IfanTsai/go-lib/user/token"
 
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/require"

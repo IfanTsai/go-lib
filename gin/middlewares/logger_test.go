@@ -2,10 +2,11 @@ package middlewares_test
 
 import (
 	"context"
-	"go-lib/gin/middlewares"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/IfanTsai/go-lib/gin/middlewares"
 
 	"github.com/stretchr/testify/require"
 
