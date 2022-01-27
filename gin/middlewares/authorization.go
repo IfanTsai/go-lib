@@ -17,6 +17,8 @@ const (
 	authorizationPayloadKey = "authorization_payload"
 )
 
+var ErrNotfound = errors.New("cannot found")
+
 func Authorization(tokenMaker token.Maker) gin.HandlerFunc {
 	return func(context *gin.Context) {
 		authorizationHeader := context.GetHeader(AuthorizationHeaderKey)
@@ -56,12 +58,30 @@ func Authorization(tokenMaker token.Maker) gin.HandlerFunc {
 	}
 }
 
-func GetPayload(c *gin.Context) *token.Payload {
+func GetAuthPayload(c *gin.Context) *token.Payload {
 	if value, exist := c.Get(authorizationPayloadKey); exist {
 		return value.(*token.Payload)
 	}
 
 	return nil
+}
+
+func GetUsername(c *gin.Context) (string, error) {
+	authPayload := GetAuthPayload(c)
+	if authPayload == nil {
+		return "", ErrNotfound
+	}
+
+	return authPayload.Username, nil
+}
+
+func GetUserID(c *gin.Context) (int64, error) {
+	authPayload := GetAuthPayload(c)
+	if authPayload == nil {
+		return 0, ErrNotfound
+	}
+
+	return authPayload.UserID, nil
 }
 
 func errorResponse(err error) gin.H {

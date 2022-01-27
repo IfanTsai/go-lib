@@ -32,7 +32,7 @@ func TestExpireJWTToken(t *testing.T) {
 func TestInvalidJWTTokenAlgNone(t *testing.T) {
 	t.Parallel()
 
-	payload, err := token.NewPayload(randutils.RandomString(6), time.Minute)
+	payload, err := token.NewPayload(randutils.RandomInt(0, 1024), randutils.RandomString(6), time.Minute)
 	require.NoError(t, err)
 
 	jwtToken := jwt.NewWithClaims(jwt.SigningMethodNone, payload)
