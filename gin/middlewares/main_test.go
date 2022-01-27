@@ -13,6 +13,8 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+const testVersion = "1.0.0"
+
 // Server serves HTTP requests for our banking service.
 type Server struct {
 	tokenMaker token.Maker

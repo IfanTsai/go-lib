@@ -23,7 +23,6 @@ type response struct {
 func TestJsonifier(t *testing.T) {
 	t.Parallel()
 
-	testVersion := "1.0.0"
 	testResp := response{
 		Code: 1,
 		Desc: "for test",
