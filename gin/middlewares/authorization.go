@@ -1,9 +1,10 @@
 package middlewares
 
 import (
-	"go-lib/user/token"
 	"net/http"
 	"strings"
+
+	"github.com/IfanTsai/go-lib/user/token"
 
 	"github.com/gin-gonic/gin"
 	"github.com/pkg/errors"

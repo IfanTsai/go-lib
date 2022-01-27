@@ -1,10 +1,11 @@
 package middlewares_test
 
 import (
-	"go-lib/randutils"
-	"go-lib/user/token"
 	"os"
 	"testing"
+
+	"github.com/IfanTsai/go-lib/randutils"
+	"github.com/IfanTsai/go-lib/user/token"
 
 	"github.com/pkg/errors"
 
