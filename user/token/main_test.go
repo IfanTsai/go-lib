@@ -1,11 +1,12 @@
 package token_test
 
 import (
-	"go-lib/randutils"
-	"go-lib/user/token"
 	"os"
 	"testing"
 	"time"
+
+	"github.com/IfanTsai/go-lib/randutils"
+	"github.com/IfanTsai/go-lib/user/token"
 
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/require"

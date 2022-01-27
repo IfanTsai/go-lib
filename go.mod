@@ -1,4 +1,4 @@
-module go-lib
+module github.com/IfanTsai/go-lib
 
 go 1.17
 
