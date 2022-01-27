@@ -110,7 +110,7 @@ func TestAuthorization(t *testing.T) {
 			authPath := "/auth"
 			server.router.GET(
 				authPath,
-				middlewares.Authorization(server.tokenMaker),
+				middlewares.Authorization(testVersion, server.tokenMaker),
 				func(c *gin.Context) {
 					userID, err := middlewares.GetUserID(c)
 					require.NoError(t, err)
