@@ -6,6 +6,8 @@ import (
 	"path/filepath"
 	"time"
 
+	"github.com/IfanTsai/go-lib/timeutils"
+
 	"gopkg.in/natefinch/lumberjack.v2"
 
 	"go.uber.org/zap"
@@ -17,7 +19,7 @@ const (
 	DefaultLevel = zapcore.DebugLevel
 
 	// DefaultTimeLayout the default time layout
-	DefaultTimeLayout = time.RFC3339
+	DefaultTimeLayout = timeutils.CSTLayout
 )
 
 // Option custom setup config

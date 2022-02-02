@@ -25,7 +25,8 @@ var reqCnt = &Metric{
 	Name:        "requests_total",
 	Description: "How many HTTP requests processed, partitioned by status code and HTTP method.",
 	Type:        "counter_vec",
-	Args:        []string{"code", "method", "handler", "host", "url"}}
+	Args:        []string{"code", "method", "handler", "host", "url"},
+}
 
 var reqDur = &Metric{
 	ID:          "reqDur",
@@ -39,13 +40,15 @@ var resSz = &Metric{
 	ID:          "resSz",
 	Name:        "response_size_bytes",
 	Description: "The HTTP response sizes in bytes.",
-	Type:        "summary"}
+	Type:        "summary",
+}
 
 var reqSz = &Metric{
 	ID:          "reqSz",
 	Name:        "request_size_bytes",
 	Description: "The HTTP request sizes in bytes.",
-	Type:        "summary"}
+	Type:        "summary",
+}
 
 var standardMetrics = []*Metric{
 	reqCnt,
