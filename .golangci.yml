@@ -27,6 +27,7 @@ linters:
     - funlen
     - gochecknoglobals
     - varnamelen
+    - wrapcheck
     - lll  # Don't complain of line too long
     - goerr113  # Don't check if error is dynamic. I disabled it here because it seems in many cases we just log err msg and we don't check error type.
     - gochecknoinits  # Don't complain of init() function
