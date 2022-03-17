@@ -146,8 +146,10 @@ func addAuthorization(
 ) {
 	t.Helper()
 
-	accessToken, err := tokenMaker.CreateToken(userID, username, duration)
+	accessToken, payload, err := tokenMaker.CreateToken(userID, username, duration)
 	require.NoError(t, err)
+	require.NotEmpty(t, accessToken)
+	require.NotNil(t, payload)
 
 	authorizationHeader := fmt.Sprintf("%s %s", authorizationType, accessToken)
 	request.Header.Set(middlewares.AuthorizationHeaderKey, authorizationHeader)
