@@ -41,11 +41,12 @@ func TestInvalidPasetoToken(t *testing.T) {
 	maker2, err := token.NewPasetoMaker(randutils.RandomString(32))
 	require.NoError(t, err)
 
-	userToken, err := maker1.CreateToken(userID, username, duration)
+	userToken, payload, err := maker1.CreateToken(userID, username, duration)
 	require.NoError(t, err)
 	require.NotEmpty(t, userToken)
+	require.NotNil(t, payload)
 
-	payload, err := maker2.VerifyToken(userToken)
+	payload, err = maker2.VerifyToken(userToken)
 	require.Error(t, err)
 	require.Nil(t, payload)
 }
