@@ -28,45 +28,45 @@ func ModifyResponse(urls *set.Set, cb func(c *gin.Context, url string, body *byt
 	}
 }
 
-type responseBufferWriter struct {
+type ResponseBufferWriter struct {
 	gin.ResponseWriter
 	body    *bytes.Buffer
 	status  int
 	flushed bool
 }
 
-func NewResponseBufferWriter(w gin.ResponseWriter) *responseBufferWriter {
-	return &responseBufferWriter{
+func NewResponseBufferWriter(w gin.ResponseWriter) *ResponseBufferWriter {
+	return &ResponseBufferWriter{
 		ResponseWriter: w,
 		body:           &bytes.Buffer{},
 	}
 }
 
-func (w *responseBufferWriter) Write(buf []byte) (int, error) {
+func (w *ResponseBufferWriter) Write(buf []byte) (int, error) {
 	return w.body.Write(buf)
 }
 
-func (w *responseBufferWriter) WriteString(s string) (int, error) {
+func (w *ResponseBufferWriter) WriteString(s string) (int, error) {
 	return w.body.WriteString(s)
 }
 
-func (w *responseBufferWriter) Written() bool {
+func (w *ResponseBufferWriter) Written() bool {
 	return w.body.Len() > 0
 }
 
-func (w *responseBufferWriter) WriteHeader(status int) {
+func (w *ResponseBufferWriter) WriteHeader(status int) {
 	w.status = status
 }
 
-func (w *responseBufferWriter) Status() int {
+func (w *ResponseBufferWriter) Status() int {
 	return w.status
 }
 
-func (w *responseBufferWriter) Size() int {
+func (w *ResponseBufferWriter) Size() int {
 	return w.body.Len()
 }
 
-func (w *responseBufferWriter) Flush() {
+func (w *ResponseBufferWriter) Flush() {
 	if w.flushed {
 		return
 	}
