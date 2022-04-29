@@ -17,7 +17,7 @@ jobs:
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v2
         with:
-          version: v1.43.0
+          version: v1.45.2
 
   unint-test:
     name: Unint Test
