@@ -14,6 +14,7 @@ func GracefulShutdown(shutdown func(ctx context.Context) error, shuttingTime tim
 	quit := make(chan os.Signal, 1)
 
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+	<-quit
 
 	ctx, cancel := context.WithTimeout(context.Background(), shuttingTime)
 	defer cancel()
