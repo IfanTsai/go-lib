@@ -9,8 +9,8 @@ import (
 	"time"
 
 	"github.com/IfanTsai/go-lib/gin/middlewares"
-	"github.com/IfanTsai/go-lib/randutils"
 	"github.com/IfanTsai/go-lib/user/token"
+	"github.com/IfanTsai/go-lib/utils/randutils"
 
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/require"
