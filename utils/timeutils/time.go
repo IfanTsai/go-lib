@@ -1,6 +1,7 @@
 package timeutils
 
 import (
+	"fmt"
 	"math"
 	"net/http"
 	"time"
@@ -21,6 +22,15 @@ func init() {
 
 	// default setting is China time zone
 	time.Local = cst
+}
+
+type Time time.Time
+
+// MarshalJSON marshals time json in "2006-01-02 15:04:05" format
+func (t *Time) MarshalJSON() ([]byte, error) {
+	var stamp = fmt.Sprintf("\"%s\"", time.Time(*t).Format(CSTLayout))
+
+	return []byte(stamp), nil
 }
 
 // RFC3339ToCSTLayout convert rfc3339 value to China standard time layout

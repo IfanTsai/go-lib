@@ -4,8 +4,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/IfanTsai/go-lib/randutils"
 	"github.com/IfanTsai/go-lib/user/token"
+	"github.com/IfanTsai/go-lib/utils/randutils"
 
 	"github.com/pkg/errors"
 
