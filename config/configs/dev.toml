@@ -1,0 +1,8 @@
+[http_server]
+ip = "0.0.0.0"
+port = 8080
+
+[token]
+symmertic_key = "12345678901234567890123456789012"
+access_duration = "15m"
+refresh_duration = "24h"
