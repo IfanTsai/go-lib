@@ -23,6 +23,23 @@ type Config struct {
 		AccessTokenDuration  time.Duration `mapstructure:"access_duration"`
 		RefreshTokenDuration time.Duration `mapstructure:"refresh_duration"`
 	} `mapstructure:"token"`
+	MySQL struct {
+		MaxOpenConnections  int           `mapstructure:"max_open_connections"`
+		MaxIdleConnections  int           `mapstructure:"max_idle_connections"`
+		MaxLifetimeDuration time.Duration `mapstructure:"max_lifetime_duration"`
+		Read                struct {
+			Addr     string `mapstructure:"addr"`
+			User     string `mapstructure:"user"`
+			Password string `mapstructure:"password"`
+			Name     string `mapstructure:"name"`
+		} `mapstructure:"read"`
+		Write struct {
+			Addr     string `mapstructure:"addr"`
+			User     string `mapstructure:"user"`
+			Password string `mapstructure:"password"`
+			Name     string `mapstructure:"name"`
+		} `mapstructure:"write"`
+	} `mapstructure:"mysql"`
 }
 
 var (
@@ -120,12 +137,4 @@ func GetTokenSymmetricKey() string {
 	return config.Token.TokenSymmetricKey
 }
 
-// GetTokenAccessDuration returns the access duration of the token.
-func GetTokenAccessDuration() time.Duration {
-	return config.Token.AccessTokenDuration
-}
-
-// GetTokenRefreshDuration returns the refresh duration of the token.
-func GetTokenRefreshDuration() time.Duration {
-	return config.Token.RefreshTokenDuration
-}
+// GetTokenAccessDurat
