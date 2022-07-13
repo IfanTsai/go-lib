@@ -9,3 +9,20 @@ port = 8080
 symmertic_key = "12345678901234567890123456789012"
 access_duration = "15m"
 refresh_duration = "24h"
+
+[mysql]
+max_open_connections = 10
+max_idle_connections = 60
+max_lifetime_duration = "60m"
+
+[mysql.read]
+addr = "127.0.0.1:3306"
+user = "root"
+password = "123456789"
+name = "users"
+
+[mysql.write]
+addr = "127.0.0.1:3306"
+user = "root"
+password = "123456789"
+name = "users"
