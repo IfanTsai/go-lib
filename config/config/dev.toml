@@ -11,6 +11,7 @@ access_duration = "15m"
 refresh_duration = "24h"
 
 [mysql]
+log = true
 max_open_connections = 10
 max_idle_connections = 60
 max_lifetime_duration = "60m"

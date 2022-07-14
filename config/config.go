@@ -24,6 +24,7 @@ type Config struct {
 		RefreshTokenDuration time.Duration `mapstructure:"refresh_duration"`
 	} `mapstructure:"token"`
 	MySQL struct {
+		Log                 bool          `mapstructure:"log"`
 		MaxOpenConnections  int           `mapstructure:"max_open_connections"`
 		MaxIdleConnections  int           `mapstructure:"max_idle_connections"`
 		MaxLifetimeDuration time.Duration `mapstructure:"max_lifetime_duration"`
