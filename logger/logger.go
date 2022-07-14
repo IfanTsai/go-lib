@@ -113,7 +113,7 @@ func WithTimeLayout(timeLayout string) Option {
 	}
 }
 
-// WithDisableConsole WithEnableConsole write log to os.Stdout or os.Stderr
+// WithDisableConsole disable write log to os.Stdout or os.Stderr
 func WithDisableConsole() Option {
 	return func(opt *option) {
 		opt.disableConsole = true
@@ -121,7 +121,7 @@ func WithDisableConsole() Option {
 }
 
 // NewJSONLogger return a json-encoder zap logger,
-func NewJSONLogger(opts ...Option) (*zap.Logger, error) {
+func NewJSONLogger(opts ...Option) *zap.Logger {
 	opt := &option{level: DefaultLevel, fields: make(map[string]string)}
 	for _, f := range opts {
 		f(opt)
@@ -199,5 +199,5 @@ func NewJSONLogger(opts ...Option) (*zap.Logger, error) {
 		logger = logger.WithOptions(zap.Fields(zapcore.Field{Key: key, Type: zapcore.StringType, String: value}))
 	}
 
-	return logger, nil
+	return logger
 }

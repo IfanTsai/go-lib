@@ -3,6 +3,8 @@ package mysql
 import (
 	"fmt"
 
+	"gorm.io/gorm/logger"
+
 	"github.com/IfanTsai/go-lib/config"
 	"github.com/pkg/errors"
 	"gorm.io/driver/mysql"
@@ -22,13 +24,13 @@ type DBConfig struct {
 	Name     string
 }
 
-func NewDB(readConfig, writeConfig *DBConfig) (*DB, error) {
-	dbRead, err := dbConnect(readConfig.User, readConfig.Password, readConfig.Password, readConfig.Name)
+func NewDB(readConfig, writeConfig *DBConfig, logFilename string) (*DB, error) {
+	dbRead, err := dbConnect(readConfig.User, readConfig.Password, readConfig.Addr, readConfig.Name, logFilename)
 	if err != nil {
 		return nil, err
 	}
 
-	dbWrite, err := dbConnect(writeConfig.User, writeConfig.Password, writeConfig.Password, writeConfig.Name)
+	dbWrite, err := dbConnect(writeConfig.User, writeConfig.Password, writeConfig.Addr, writeConfig.Name, logFilename)
 	if err != nil {
 		return nil, err
 	}
@@ -39,7 +41,7 @@ func NewDB(readConfig, writeConfig *DBConfig) (*DB, error) {
 	}, nil
 }
 
-func NewDBInConfig() (*DB, error) {
+func NewDBInConfig(logFilename string) (*DB, error) {
 	readConfig := &DBConfig{
 		User:     config.GetConfig().MySQL.Read.User,
 		Password: config.GetConfig().MySQL.Read.Password,
@@ -54,7 +56,7 @@ func NewDBInConfig() (*DB, error) {
 		Name:     config.GetConfig().MySQL.Write.Name,
 	}
 
-	return NewDB(readConfig, writeConfig)
+	return NewDB(readConfig, writeConfig, logFilename)
 }
 
 func (db *DB) Close() error {
@@ -84,7 +86,7 @@ func (db *DB) DBWriteClose() error {
 	return sqlDB.Close()
 }
 
-func dbConnect(user, password, addr, dbName string) (*gorm.DB, error) {
+func dbConnect(user, password, addr, dbName, logFilename string) (*gorm.DB, error) {
 	dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 		user,
 		password,
@@ -96,11 +98,17 @@ func dbConnect(user, password, addr, dbName string) (*gorm.DB, error) {
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true,
 		},
-		//Logger: logger.Default.LogMode(logger.Info),
+		Logger: newLogger(logFilename),
 	})
 
 	if err != nil {
 		return nil, errors.Wrapf(err, "[db connection failed] Database name: %s", dbName)
+	}
+
+	if config.GetConfig().MySQL.Log {
+		db.Logger.LogMode(logger.Info)
+	} else {
+		db.Logger.LogMode(logger.Silent)
 	}
 
 	db.Set("gorm:table_options", "CHARSET=utf8mb4")
