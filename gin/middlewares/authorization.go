@@ -15,16 +15,17 @@ const (
 	AuthorizationTypeBear  = "bearer"
 
 	authorizationPayloadKey = "authorization_payload"
+	tokenMakerKey           = "token_maker"
 )
 
 var ErrNotfound = errors.New("cannot found")
 
 func Authorization(version string, tokenMaker token.Maker) gin.HandlerFunc {
-	return func(context *gin.Context) {
-		authorizationHeader := context.GetHeader(AuthorizationHeaderKey)
+	return func(c *gin.Context) {
+		authorizationHeader := c.GetHeader(AuthorizationHeaderKey)
 		if len(authorizationHeader) == 0 {
 			err := errors.New("authorization header is not provided")
-			abortWithErrorResponse(context, version, http.StatusUnauthorized, err)
+			abortWithErrorResponse(c, version, http.StatusUnauthorized, err)
 
 			return
 		}
@@ -33,7 +34,7 @@ func Authorization(version string, tokenMaker token.Maker) gin.HandlerFunc {
 		fields := strings.Fields(authorizationHeader)
 		if len(fields) < 2 {
 			err := errors.New("invalid authorization header format")
-			abortWithErrorResponse(context, version, http.StatusUnauthorized, err)
+			abortWithErrorResponse(c, version, http.StatusUnauthorized, err)
 
 			return
 		}
@@ -41,7 +42,7 @@ func Authorization(version string, tokenMaker token.Maker) gin.HandlerFunc {
 		authorizationType := strings.ToLower(fields[0])
 		if authorizationType != AuthorizationTypeBear {
 			err := errors.Errorf("unsupported authorization type %s", authorizationType)
-			abortWithErrorResponse(context, version, http.StatusUnauthorized, err)
+			abortWithErrorResponse(c, version, http.StatusUnauthorized, err)
 
 			return
 		}
@@ -49,13 +50,27 @@ func Authorization(version string, tokenMaker token.Maker) gin.HandlerFunc {
 		accessToken := fields[1]
 		payload, err := tokenMaker.VerifyToken(accessToken)
 		if err != nil {
-			abortWithErrorResponse(context, version, http.StatusUnauthorized, err)
+			abortWithErrorResponse(c, version, http.StatusUnauthorized, err)
 
 			return
 		}
 
-		context.Set(authorizationPayloadKey, payload)
+		c.Set(authorizationPayloadKey, payload)
 	}
+}
+
+func SetTokenMaker(maker token.Maker) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Set(tokenMakerKey, maker)
+	}
+}
+
+func GetTokenMaker(c *gin.Context) token.Maker {
+	if value, exist := c.Get(tokenMakerKey); exist {
+		return value.(token.Maker)
+	}
+
+	return nil
 }
 
 func GetAuthPayload(c *gin.Context) *token.Payload {
@@ -88,7 +103,9 @@ func abortWithErrorResponse(c *gin.Context, version string, statusCode int, err 
 	c.AbortWithStatusJSON(statusCode, &Response{
 		Version: version,
 		Success: false,
-		Error:   err,
 		Result:  nil,
+		Error: Error{
+			Message: err.Error(),
+		},
 	})
 }

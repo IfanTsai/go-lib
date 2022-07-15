@@ -25,7 +25,6 @@ type Logger struct {
 func newLogger(filename string) *Logger {
 	return &Logger{
 		zapLogger: logger.NewJSONLogger(
-			logger.WithDisableConsole(),
 			logger.WithFileRotationP(filename),
 		),
 	}
