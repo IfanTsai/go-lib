@@ -25,11 +25,11 @@ const (
 type Option func(*option)
 
 type option struct {
-	level          zapcore.Level
-	fields         map[string]string
-	file           io.Writer
-	timeLayout     string
-	disableConsole bool
+	level         zapcore.Level
+	fields        map[string]string
+	file          io.Writer
+	timeLayout    string
+	enableConsole bool
 }
 
 // WithDebugLevel only greater than 'level' will output
@@ -96,7 +96,7 @@ func WithFileRotationP(filename string) Option {
 		panic(err)
 	}
 
-	return WithIOWriter(&lumberjack.Logger{ // concurrent-safed
+	return WithIOWriter(&lumberjack.Logger{
 		Filename:   filename,
 		MaxSize:    128, // 128 MB
 		MaxBackups: 300,
@@ -113,10 +113,10 @@ func WithTimeLayout(timeLayout string) Option {
 	}
 }
 
-// WithDisableConsole disable write log to os.Stdout or os.Stderr
-func WithDisableConsole() Option {
+// WithEnableConsole enable write log to os.Stdout or os.Stderr
+func WithEnableConsole() Option {
 	return func(opt *option) {
-		opt.disableConsole = true
+		opt.enableConsole = true
 	}
 }
 
@@ -166,7 +166,7 @@ func NewJSONLogger(opts ...Option) *zap.Logger {
 
 	core := zapcore.NewTee()
 
-	if !opt.disableConsole {
+	if opt.enableConsole {
 		core = zapcore.NewTee(
 			zapcore.NewCore(jsonEncoder,
 				zapcore.NewMultiWriteSyncer(stdout),
@@ -190,10 +190,7 @@ func NewJSONLogger(opts ...Option) *zap.Logger {
 		)
 	}
 
-	logger := zap.New(core,
-		zap.AddCaller(),
-		zap.ErrorOutput(stderr),
-	)
+	logger := zap.New(core, zap.AddCaller(), zap.ErrorOutput(stderr))
 
 	for key, value := range opt.fields {
 		logger = logger.WithOptions(zap.Fields(zapcore.Field{Key: key, Type: zapcore.StringType, String: value}))

@@ -19,9 +19,9 @@ type Config struct {
 		Port int    `mapstructure:"port"`
 	} `mapstructure:"http_server"`
 	Token struct {
-		TokenSymmetricKey    string        `mapstructure:"symmetric_key"`
-		AccessTokenDuration  time.Duration `mapstructure:"access_duration"`
-		RefreshTokenDuration time.Duration `mapstructure:"refresh_duration"`
+		SymmetricKey    string        `mapstructure:"symmetric_key"`
+		AccessDuration  time.Duration `mapstructure:"access_duration"`
+		RefreshDuration time.Duration `mapstructure:"refresh_duration"`
 	} `mapstructure:"token"`
 	MySQL struct {
 		Log                 bool          `mapstructure:"log"`
@@ -135,7 +135,15 @@ func GetPortWithDefault(defaultPort int) int {
 
 // GetTokenSymmetricKey returns the symmetric key of the token.
 func GetTokenSymmetricKey() string {
-	return config.Token.TokenSymmetricKey
+	return config.Token.SymmetricKey
 }
 
-// GetTokenAccessDurat
+// GetTokenAccessDuration returns the duration of the access token.
+func GetTokenAccessDuration() time.Duration {
+	return config.Token.AccessDuration
+}
+
+// GetTokenRefreshDuration returns the duration of the refresh token.
+func GetTokenRefreshDuration() time.Duration {
+	return config.Token.RefreshDuration
+}
