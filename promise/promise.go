@@ -98,7 +98,9 @@ func (p *Promise) handle(cb *callback) {
 
 func (p *Promise) resolve(value interface{}) interface{} {
 	if newPromise, ok := value.(Thenable); ok {
-		newPromise.Then(p.resolve, p.reject) // p.resolve is promise bridge resolve
+		// p.resolve is promise bridge resolve
+		// p.resolve will be called when newPromise is settled, then promise bridge's Then handler will be called
+		newPromise.Then(p.resolve, p.reject)
 
 		return nil
 	}
