@@ -1,6 +1,6 @@
 module github.com/IfanTsai/go-lib
 
-go 1.17
+go 1.18
 
 require (
 	github.com/Shopify/sarama v1.32.0
