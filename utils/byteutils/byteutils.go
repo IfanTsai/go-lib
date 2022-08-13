@@ -1,4 +1,3 @@
-// nolint:govet
 package byteutils
 
 import (
@@ -21,5 +20,5 @@ func S2B(s string) []byte {
 		Cap:  sh.Len,
 	}
 
-	return *(*[]byte)(unsafe.Pointer(&bh))
+	return *(*[]byte)(unsafe.Pointer(&bh)) //nolint:govet
 }
