@@ -29,7 +29,7 @@ func TestRecovery(t *testing.T) {
 		func(c *gin.Context) {
 			panic("test for recovery")
 
-			c.JSON(http.StatusOK, gin.H{}) // nolint
+			c.JSON(http.StatusOK, gin.H{}) //nolint:govet
 		},
 	)
 
