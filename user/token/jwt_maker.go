@@ -3,7 +3,7 @@ package token
 import (
 	"time"
 
-	"github.com/golang-jwt/jwt"
+	"github.com/golang-jwt/jwt/v4"
 	"github.com/pkg/errors"
 )
 
@@ -30,6 +30,11 @@ func (maker *JWTMaker) CreateToken(userID int64, username string, duration time.
 		return "", nil, errors.WithMessage(err, "failed to new payload")
 	}
 
+	return maker.CreateTokenForPayload(payload)
+}
+
+// CreateTokenForPayload creates a new token for a specific payload.
+func (maker *JWTMaker) CreateTokenForPayload(payload *Payload) (string, *Payload, error) {
 	jwtToken := jwt.NewWithClaims(jwt.SigningMethodHS256, payload)
 
 	signedString, err := jwtToken.SignedString([]byte(maker.secretKey))
