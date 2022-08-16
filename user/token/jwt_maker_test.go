@@ -7,7 +7,7 @@ import (
 	"github.com/IfanTsai/go-lib/user/token"
 	"github.com/IfanTsai/go-lib/utils/randutils"
 
-	"github.com/golang-jwt/jwt"
+	"github.com/golang-jwt/jwt/v4"
 	"github.com/stretchr/testify/require"
 )
 
