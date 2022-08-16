@@ -33,6 +33,11 @@ func (maker *PasetoMaker) CreateToken(userID int64, username string, duration ti
 		return "", nil, errors.WithMessage(err, "failed to new payload")
 	}
 
+	return maker.CreateTokenForPayload(payload)
+}
+
+// CreateTokenForPayload creates a new token for a specific payload.
+func (maker *PasetoMaker) CreateTokenForPayload(payload *Payload) (string, *Payload, error) {
 	token, err := maker.paseto.Encrypt(maker.symmetricKey, payload, nil)
 	if err != nil {
 		return "", nil, errors.Wrap(err, "failed to encrypt payload")

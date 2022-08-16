@@ -7,6 +7,9 @@ type Maker interface {
 	// CreateToken creates a new token for a specific user id, username and duration
 	CreateToken(userID int64, username string, duration time.Duration) (string, *Payload, error)
 
+	// CreateTokenForPayload creates a new token for a specific payload
+	CreateTokenForPayload(payload *Payload) (string, *Payload, error)
+
 	// VerifyToken checks if the token is valid or not
 	VerifyToken(token string) (*Payload, error)
 }
