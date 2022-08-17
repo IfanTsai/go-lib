@@ -39,6 +39,10 @@ func NewPayload(userID int64, username string, duration time.Duration, others ..
 		ExpiredAt: time.Now().Add(duration),
 	}
 
+	if len(others) > 0 {
+		payload.Others = make(map[string]interface{})
+	}
+
 	for _, other := range others {
 		for k, v := range other {
 			payload.Others[k] = v
@@ -46,6 +50,22 @@ func NewPayload(userID int64, username string, duration time.Duration, others ..
 	}
 
 	return payload, nil
+}
+
+func (p *Payload) GetFromOthers(key string) interface{} {
+	if p.Others == nil {
+		return nil
+	}
+
+	return p.Others[key]
+}
+
+func (p *Payload) SetToOthers(key string, value interface{}) {
+	if p.Others == nil {
+		p.Others = make(map[string]interface{})
+	}
+
+	p.Others[key] = value
 }
 
 func (p *Payload) Valid() error {
