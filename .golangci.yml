@@ -49,7 +49,6 @@ linters:
     - stylecheck  # Stylecheck is a replacement for golint
     - unconvert   # Remove unnecessary type conversions
     - unused      # Find unused functions, constants, types and variables
-    - varcheck    # Finds unused global variables and constants
     - wastedassign # wastedassign finds wasted assignment statements.
 
     # Can also enable more linters if we need.
