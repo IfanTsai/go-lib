@@ -12,13 +12,15 @@ func B2S(b []byte) string {
 }
 
 // S2B converts string to a byte slice without memory allocation.
+// Ref https://github.com/valyala/fasthttp/pull/637 .
 func S2B(s string) []byte {
-	sh := (*reflect.StringHeader)(unsafe.Pointer(&s))
-	bh := reflect.SliceHeader{
-		Data: sh.Data,
-		Len:  sh.Len,
-		Cap:  sh.Len,
-	}
+	sh := *(*reflect.StringHeader)(unsafe.Pointer(&s)) //nolint:govet
 
-	return *(*[]byte)(unsafe.Pointer(&bh)) //nolint:govet
+	var b []byte
+	bh := (*reflect.SliceHeader)(unsafe.Pointer(&b))
+	bh.Data = sh.Data
+	bh.Len = sh.Len
+	bh.Cap = sh.Len
+
+	return b
 }
